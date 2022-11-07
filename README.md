@@ -2,7 +2,7 @@
 
 [![Test](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/test.yml/badge.svg)](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/test.yml)[![Release](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/release.yml/badge.svg)](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/release.yml)
 
-This is a simple tool for 3rd party login with JWT .
+This is a simple tool for 3rd party login with JWT.
 
 ## Installation
 
@@ -185,4 +185,18 @@ You can try this script to get credential token from Google and verify it with c
     });
   }
 </script>
+```
+
+## Example
+
+You can see the example in `./example/`
+
+```bash
+cd example && python manage.py runserver
+```
+
+If you need superuser, run:
+
+```bash
+python manage.py createsuperuser
 ```
