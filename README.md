@@ -1,6 +1,7 @@
 # Django Simple 3rd Party JWT
 
-[![Test](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/test.yml/badge.svg)](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/test.yml)[![Release](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/release.yml/badge.svg)](https://github.com/NatLee/django-simple-third-party-jwt/actions/workflows/release.yml)
+[![Test](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/test.yml/badge.svg)](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/test.yml)
+[![Release](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/release.yml/badge.svg)](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/release.yml)
 
 This is a simple tool for 3rd party login with JWT.
 
@@ -14,7 +15,7 @@ Check it in [Pypi](https://pypi.org/project/django-simple-third-party-jwt/).
 
 ## Quick Start
 
-### Back end
+### Backend
 
 1. Add `django_simple_third_party_jwt` to your `INSTALLED_APPS` in `settings.py` like this:
 
@@ -77,7 +78,7 @@ SOCIAL_GOOGLE_CLIENT_ID = (
     "376808175534-d6mefo6b1kqih3grjjose2euree2g3cs.apps.googleusercontent.com" # Here is test client ID used with `localhost:8000`.
 )
 LOGIN_REDIRECT_URL = "/"
-VALID_REGISTER_DOMAINS = ["gmail.com"]
+VALID_REGISTER_DOMAINS = ["gmail.com"] # Only these domains can login.
 # --------------- END - Google Auth Setting -----------------
 ```
 
@@ -121,7 +122,7 @@ python manage.py migrate django_simple_third_party_jwt
 python manage.py runserver
 ```
 
-### Front End
+### Frontend
 
 You need to check `{{ social_google_client_id }}` is the same with `Metadata` and your `Html` page.
 
@@ -189,11 +190,14 @@ You can try this script to get credential token from Google and verify it with c
 
 ## Example
 
+### Run example backend
+
 You can see the example in `./example/`
 
 ```bash
 git clone https://github.com/NatLee/Django-Simple-3rd-Party-JWT
-cd Django-Simple-3rd-Party-JWT/example
+cd Django-Simple-3rd-Party-JWT/example/django_simple_third_party_jwt_example/
+pip install -r requirements.txt
 python manage.py makemigrations && python manage.py migrate
 python manage.py runserver
 ```
@@ -203,3 +207,59 @@ If you need superuser, run:
 ```bash
 python manage.py createsuperuser
 ```
+
+### Visit example frontend
+
+Open browser and visit `localhost:8000`.
+
+There are several url routes available in this example.
+
+```
+api/auth/google/
+api/__hidden_admin/
+api/__hidden_dev_dashboard/
+api/auth/token [name='token_get']
+api/auth/token/refresh [name='token_refresh']
+api/auth/token/verify [name='token_verify']
+^api/__hidden_swagger(?P<format>\.json|\.yaml)$ [name='schema-json']
+^api/__hidden_swagger/$ [name='schema-swagger-ui']
+^api/__hidden_redoc/$ [name='schema-redoc']
+```
+
+- Dev Dashboard
+
+In the first, visit testing dashboard`http://localhost:8000/api/__hidden_dev_dashboard/`.
+
+![dashboard-no-login](https://i.imgur.com/yZoHxso_d.webp?maxwidth=760&fidelity=grand)
+
+And, you can find Google Login in the top right corner like below.
+
+![google-login-min](https://developers.google.com/static/identity/gsi/web/images/personalized-button-single.png)
+
+Click it.
+
+![google-login](https://developers.google.com/static/identity/gsi/web/images/new-one-tap-ui.png)
+
+When you login, you will see the following hint.
+
+![dashboard-login](https://i.imgur.com/jyO1409.png)
+
+If you want to filter domains with Google Login, feel free to check `VALID_REGISTER_DOMAINS` in `settings.py`.
+
+Once you login with Google, your account ID will be recorded in the database.
+
+> See more login information in database.
+
+| id  | provider |     unique_id      | user_id |
+| :-: | :------: | :----------------: | :-----: |
+|  1  |  google  | 100056159912345678 |    1    |
+
+- Swagger
+
+Also can see all information of APIs in `http://localhost:8000/api/__hidden_swagger/`.
+
+![swagger](https://i.imgur.com/ODtUseP.png)
+
+## More
+
+Check https://developers.google.com/identity/gsi/web/guides/overview with more information of Google Login API.
