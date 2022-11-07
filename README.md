@@ -192,7 +192,10 @@ You can try this script to get credential token from Google and verify it with c
 You can see the example in `./example/`
 
 ```bash
-cd example && python manage.py runserver
+git clone https://github.com/NatLee/Django-Simple-3rd-Party-JWT
+cd Django-Simple-3rd-Party-JWT/example
+python manage.py makemigrations && python manage.py migrate
+python manage.py runserver
 ```
 
 If you need superuser, run:

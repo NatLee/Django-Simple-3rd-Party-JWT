@@ -39,7 +39,7 @@ setuptools.setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.8',
-    install_requires=['django>=4.0.0', 'djangorestframework', 'djangorestframework-simplejwt==4.8.0', 'google-auth'],
+    install_requires=['django>=4.0.0', 'djangorestframework', 'djangorestframework-simplejwt==4.8.0', 'google-auth', 'requests'],
     extras_require={
         'dev': ['check-manifest'],
         # 'test': ['coverage'],
