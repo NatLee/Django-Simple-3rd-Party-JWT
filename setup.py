@@ -4,6 +4,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 PROJECT_NAME = 'django-simple-third-party-jwt'
+GIT_REPO_NAME = 'Django-Simple-3rd-Party-JWT'
 
 setuptools.setup(
     name=PROJECT_NAME,
@@ -14,11 +15,11 @@ setuptools.setup(
     keywords='django, jwt, 3rd party login',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url=f'https://github.com/natlee/{PROJECT_NAME}',
+    url=f'https://github.com/NatLee/{GIT_REPO_NAME}',
     project_urls={
-        'Documentation': f'https://github.com/natlee/{PROJECT_NAME}',
-        'Bug Reports': f'https://github.com/natlee/{PROJECT_NAME}/issues',
-        'Source Code': f'https://github.com/natlee/{PROJECT_NAME}',
+        'Documentation': f'https://github.com/natlee/{GIT_REPO_NAME}',
+        'Bug Reports': f'https://github.com/natlee/{GIT_REPO_NAME}/issues',
+        'Source Code': f'https://github.com/natlee/{GIT_REPO_NAME}',
         # 'Funding': '',
         # 'Say Thanks!': '',
     },
