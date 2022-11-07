@@ -1,0 +1,6 @@
+include pyproject.toml
+include *.md
+include LICENSE
+recursive-include src *
+recursive-include tests test*.py
+recursive-include example *
