@@ -248,7 +248,7 @@ If you want to filter domains with Google Login, feel free to check `VALID_REGIS
 
 Once you login with Google, your account ID will be recorded in the database.
 
-> See more login information in database.
+> See more login information in `social_account` table in database.
 
 | id  | provider |     unique_id      | user_id |
 | :-: | :------: | :----------------: | :-----: |
