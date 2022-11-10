@@ -3,7 +3,7 @@ from rest_framework import serializers
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
-from django.conf import settings
+from django_simple_third_party_jwt import settings
 from django_simple_third_party_jwt.models import SocialAccount
 
 from django_simple_third_party_jwt.exception import InvalidEmailError
