@@ -190,6 +190,10 @@ You can try this script to get credential token from Google and verify it with c
 
 ## Example
 
+Check [Example of dashboard](https://github.com/NatLee/Django-Simple-3rd-Party-JWT-Dev-Dashboard).
+
+Or you can use the following steps.
+
 ### Run example backend
 
 You can see the example in `./example/`
