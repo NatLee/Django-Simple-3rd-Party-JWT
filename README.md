@@ -82,6 +82,12 @@ VALID_REGISTER_DOMAINS = ["gmail.com"] # Only these domains can login.
 # --------------- END - Google Auth Setting -----------------
 ```
 
+> You can regist `SOCIAL_GOOGLE_CLIENT_ID` on Google Cloud Platform.
+
+![](https://i.imgur.com/7UKP3I7.png)
+
+![](https://i.imgur.com/IoTRs4j.png)
+
 3. Include the `django_simple_third_party_jwt` URL settings in your project `urls.py` like this:
 
 ```py
@@ -122,7 +128,9 @@ python manage.py migrate django_simple_third_party_jwt
 python manage.py runserver
 ```
 
-### Frontend
+### Frontend (Optional)
+
+Here just a demo frontend settings.
 
 You need to check `{{ social_google_client_id }}` is the same with `Metadata` and your `Html` page.
 
