@@ -5,6 +5,8 @@
 
 This is a simple tool for 3rd party login with JWT.
 
+> See Simple Version in another repo -> [JWT 3rd Party Dashboard](https://github.com/NatLee/Django-Simple-3rd-Party-JWT-Dev-Dashboard).
+
 ## Installation
 
 ```bash
