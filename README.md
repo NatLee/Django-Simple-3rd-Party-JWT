@@ -231,7 +231,8 @@ Open browser and visit `localhost:8000`.
 There are several url routes available in this example.
 
 ```
-api/auth/google/
+api/auth/google/  <--------- Google Login
+api/auth/google/session <----------- Google Login with Django Session
 api/__hidden_admin/
 api/__hidden_dev_dashboard/
 api/auth/token [name='token_get']
