@@ -164,10 +164,12 @@ You can try this script to get credential token from Google and verify it with c
 ```html
 <script>
   function get_jwt_using_google_credential(data) {
+    const google_token_url = "/api/auth/google/token";
+    // const google_token_url = "/api/auth/google/token/session"; <------ if you also need login as session, choose this one.
     const credential = data.credential;
     $.ajax({
       method: "POST",
-      url: "/api/auth/google/token",
+      url: google_token_url,
       data: { credential: credential },
     }).done(function (data) {
       const access_token = data.access;
@@ -213,7 +215,7 @@ git clone https://github.com/NatLee/Django-Simple-3rd-Party-JWT
 cd Django-Simple-3rd-Party-JWT/example/django_simple_third_party_jwt_example/
 pip install -r requirements.txt
 python manage.py makemigrations && python manage.py migrate
-python manage.py runserver
+python manage.py runserver 0.0.0.0:8000
 ```
 
 If you need superuser, run:

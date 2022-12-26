@@ -5,4 +5,5 @@ from django_simple_third_party_jwt import views
 
 urlpatterns = [
     path("token", views.GoogleLogin.as_view(), name='google_token'),
+    path("token/session", views.GoogleLoginSession.as_view(), name='google_token_session'),
 ]

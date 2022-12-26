@@ -70,7 +70,8 @@
         const credential = data.credential;
         $.ajax({
             method: "POST",
-            url: "/api/auth/google/token",
+            //url: "/api/auth/google/token",
+            url: "/api/auth/google/token/session",
             data: { credential: credential }
         }).done(function (data) {
             const access_token = data.access;

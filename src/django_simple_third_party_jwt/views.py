@@ -1,3 +1,5 @@
+from django.contrib.auth import login
+
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -24,26 +26,47 @@ def get_tokens_for_user(user):
     }
 
 
+def third_party_login(serializer, request, session=False):
+    if serializer.is_valid(raise_exception=True):
+        try:
+            user = serializer.save()
+            if session:
+                login(request=request, user=user)
+            return Response(get_tokens_for_user(user))
+        except InvalidEmailError:
+            return Response({
+                    "status": "error",
+                    "detail": "This email is invalid."
+                }, status=401
+            )
+        except ValueError as exception:
+            logger.error(exception)
+            return Response({
+                    "status": "error",
+                    "detail": "Something went wrong :("
+                },status=500
+            )
+    else:
+        return Response({
+                "status": "error",
+                "detail": "Data is not serializable"
+            }, status=401
+        )
+
+
 class GoogleLogin(TokenObtainPairView):
     permission_classes = (AllowAny,)  # AllowAny for login
     serializer_class = SocialLoginSerializer
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            try:
-                user = serializer.save()
-                return Response(get_tokens_for_user(user))
-            except InvalidEmailError:
-                return Response(
-                    {"status": "error", "detail": "This email is invaild."}, status=401
-                )
-            except ValueError as e:
-                logger.error(e)
-                return Response(
-                    {"status": "error", "detail": "Something wnet wrong :("}, status=500
-                )
-        else:
-            return Response(
-                {"status": "error", "detail": "Data is not serializable"}, status=401
-            )
+        return third_party_login(serializer, request)
+
+class GoogleLoginSession(TokenObtainPairView):
+    permission_classes = (AllowAny,)  # AllowAny for login
+    serializer_class = SocialLoginSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        return third_party_login(serializer, request, session=True)
+
