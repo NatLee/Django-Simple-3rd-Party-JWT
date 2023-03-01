@@ -3,6 +3,10 @@
 [![Test](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/test.yml/badge.svg)](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/test.yml)
 [![Release](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/release.yml/badge.svg)](https://github.com/NatLee/Django-Simple-3rd-Party-JWT/actions/workflows/release.yml)
 
+
+<img width="1363" alt="image" src="https://user-images.githubusercontent.com/10178964/222040924-8cb37622-b1ac-4343-bb2f-96e48aabfa87.png">
+
+
 This is a simple tool for 3rd party login with JWT.
 
 > See Simple Version in another repo -> [JWT 3rd Party Dashboard](https://github.com/NatLee/Django-Simple-3rd-Party-JWT-Dev-Dashboard).
