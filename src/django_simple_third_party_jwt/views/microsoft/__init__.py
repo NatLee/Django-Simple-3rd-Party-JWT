@@ -103,10 +103,6 @@ def initialize_context(request):
     context['user'] = request.session.get('user',{'is_authenticated': False})
     return context
 
-def home(request):
-    context = initialize_context(request)
-    return render(request, 'django_simple_third_party_jwt/index.html', context)
-
 def sign_in(request):
     # Get the sign-in flow
     root_url = request.build_absolute_uri('/')
@@ -122,7 +118,7 @@ def sign_in(request):
 def sign_out(request):
     # Clear out the user and token
     remove_user_and_token(request)
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('microsoft-signin'))
 
 def callback(request):
     # Make the token request
