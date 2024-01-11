@@ -289,16 +289,25 @@ Open browser and visit `localhost:8000`.
 There are several url routes available in this example.
 
 ```
-api/auth/google/  <--------- Google Login
-api/auth/google/session <----------- Google Login with Django Session
+
+api/auth/google/ <---- Google Login
+api/auth/google/session <------ Google Login with Django Session
+
+api/ auth/microsoft/signin <----- Microsoft Login with Django Session
+api/ auth/microsoft/signout <----- Microsoft Logout
+api/ auth/microsoft/callback <----- Microsoft Login Callback
+
 api/__hidden_admin/
 api/__hidden_dev_dashboard/
+
 api/auth/token [name='token_get']
 api/auth/token/refresh [name='token_refresh']
 api/auth/token/verify [name='token_verify']
+
 ^api/__hidden_swagger(?P<format>\.json|\.yaml)$ [name='schema-json']
 ^api/__hidden_swagger/$ [name='schema-swagger-ui']
 ^api/__hidden_redoc/$ [name='schema-redoc']
+
 ```
 
 - Dev Dashboard
