@@ -12,7 +12,7 @@ setuptools.setup(
     author='Nat Lee',
     author_email='natlee.work@gmail.com',
     description='Easy to use JWT with 3rd party login.',
-    keywords='django, jwt, 3rd party login',
+    keywords='django, jwt, 3rd party login, microsoft login, google login',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url=f'https://github.com/NatLee/{GIT_REPO_NAME}',
@@ -24,6 +24,11 @@ setuptools.setup(
         # 'Say Thanks!': '',
     },
     package_dir={'': 'src'},
+    package_data={
+        "django_simple_third_party_jwt": [
+            "templates/**/*",
+        ]
+    },
     packages=setuptools.find_packages(where='src'),
     classifiers=[
         # see https://pypi.org/classifiers/
@@ -40,7 +45,14 @@ setuptools.setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.8',
-    install_requires=['django>=4.0.0', 'djangorestframework', 'djangorestframework-simplejwt>=4.8.0', 'google-auth', 'requests'],
+    install_requires=[
+        'django>=4.0.0',
+        'djangorestframework',
+        'djangorestframework-simplejwt>=4.8.0',
+        'requests',
+        'google-auth', # Google Authentication Library
+        'msal', # Microsoft Authentication Library
+    ],
     extras_require={
         'dev': ['check-manifest'],
         # 'test': ['coverage'],

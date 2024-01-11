@@ -76,23 +76,62 @@ SIMPLE_JWT = {
 }
 # -------------- END - SimpleJWT Setting --------------
 
-# -------------- START - Google Auth Setting --------------
+# -------------- START - Auth Setting --------------
+
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 # SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
-SOCIAL_GOOGLE_CLIENT_ID = (
-    "376808175534-d6mefo6b1kqih3grjjose2euree2g3cs.apps.googleusercontent.com" # Here is test client ID used with `localhost:8000`.
-)
+
 LOGIN_REDIRECT_URL = "/"
-VALID_REGISTER_DOMAINS = ["gmail.com"] # Only these domains can login.
-# --------------- END - Google Auth Setting -----------------
+VALID_REGISTER_DOMAINS = ["gmail.com", "hotmail.com"] # Only these domains can login.
+
+# ================== Google Auth ==================
+# Add this block if you want to login with Google.
+
+SOCIAL_GOOGLE_CLIENT_ID = "376808175534-d6mefo6b1kqih3grjjose2euree2g3cs.apps.googleusercontent.com"
+
+# ================== END - Google Auth ==================
+
+# ================== Microsoft Auth ==================
+# Add this block if you want to login with Microsoft.
+
+# ID
+SOCIAL_MICROSOFT_CLIENT_ID = '32346173-22bc-43b2-b6ed-f88f6a76e38c'
+# Secret
+SOCIAL_MICROSOFT_CLIENT_SECRET = 'K5z8Q~dIXDiFN5qjMjRjIx34cZOJ3Glkrg.dxcG9'
+# Callback URL
+MICROSOFT_CALLBACK_PATH = 'api/auth/microsoft/callback'
+# Signin URL
+MICROSOFT_SIGNIN_PATH = 'api/auth/microsoft/signin'
+
+# ================== END - Microsoft Auth ==================
+
+
+# --------------- END - Auth Setting -----------------
 ```
 
 > You can regist `SOCIAL_GOOGLE_CLIENT_ID` on Google Cloud Platform.
 
-![](https://i.imgur.com/7UKP3I7.png)
+  [Google Colud | API和服務 | 憑證](https://console.cloud.google.com/apis/credentials)
 
-![](https://i.imgur.com/IoTRs4j.png)
+  1. Create a new project and create a new OAuth 2.0 Client ID.
+    ![](https://i.imgur.com/7UKP3I7.png)
+
+  2. Add `http://localhost:8000` to `Authorized JavaScript origins` and `Authorized redirect URIs`.
+    ![](https://i.imgur.com/IoTRs4j.png)
+
+> You can regist `SOCIAL_MICROSOFT_CLIENT_ID` on Microsoft Azure.
+
+[Microsoft Entra 識別碼 | 應用程式註冊](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps)
+
+  1. Create a new application.
+    ![](https://i.imgur.com/my5UtXv.png)
+  2. Add `http://localhost:8000/api/auth/microsoft/callback` to `Redirect URIs`
+    ![](https://i.imgur.com/lsaZgMM.png)
+  3. Get `Client ID` from `Overview` page.
+    ![](https://i.imgur.com/5oo3xnI.png)
+  4. Get `Client Secret` from `Certificates & secrets` page.
+    ![](https://i.imgur.com/3F5ge7l.png)
 
 3. Include the `django_simple_third_party_jwt` URL settings in your project `urls.py` like this:
 
@@ -100,8 +139,7 @@ VALID_REGISTER_DOMAINS = ["gmail.com"] # Only these domains can login.
 from django.conf import settings
 from django.urls import include
 urlpatterns += [
-    # google login
-    path("api/auth/google/", include("django_simple_third_party_jwt.urls")),
+    path("api/", include("django_simple_third_party_jwt.urls")),
 ]
 ```
 
@@ -137,6 +175,8 @@ python manage.py runserver
 ### Frontend (Optional)
 
 Here just a demo frontend settings.
+
+#### Google Login
 
 You need to check `{{ social_google_client_id }}` is the same with `Metadata` and your `Html` page.
 
@@ -203,6 +243,20 @@ You can try this script to get credential token from Google and verify it with c
   }
 </script>
 ```
+
+#### Microsoft Login
+
+Set `LOGIN_REDIRECT_URL` in `settings.py` and add the following code in your `Html` page.
+
+- Html
+
+```html
+<button id="microsoft-login-button" class="btn w-100" onclick="location.href='/{{ microsoft_signin_path }}';">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft logo" style="width: 30px; height: 30px;">
+  Login with Microsoft
+</button>
+```
+
 
 ## Example
 
@@ -284,3 +338,20 @@ Also can see all information of APIs in `http://localhost:8000/api/__hidden_swag
 ## More
 
 Check https://developers.google.com/identity/gsi/web/guides/overview with more information of Google Login API.
+
+## Misc tools
+
+### Install & re-install package
+
+* Linux
+
+```bash
+bash dev-reinstall.sh
+```
+
+* Windows
+
+```powershell
+./dev-reinstall.ps1
+```
+

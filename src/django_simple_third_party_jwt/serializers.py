@@ -13,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class SocialLoginSerializer(serializers.Serializer):
+class GoogleLoginSerializer(serializers.Serializer):
     # Google login
     credential = serializers.CharField(required=True)
 
@@ -50,7 +50,7 @@ class SocialLoginSerializer(serializers.Serializer):
 
                 # check email
                 if domain not in settings.VALID_REGISTER_DOMAINS:
-                    logger.warning(f"`{email}` attempts to register!!")
+                    logger.warning(f"[AUTH][GOOGLE] `{email}` attempts to register!!")
                     raise InvalidEmailError
 
                 first_name = idinfo["given_name"]
@@ -63,8 +63,12 @@ class SocialLoginSerializer(serializers.Serializer):
                     last_name=last_name,
                     email=email,
                 )
-                logger.debug(f"Created user [{account}][{first_name}.{last_name}] - [{email}]")
-                SocialAccount.objects.create(user=user, unique_id=idinfo["sub"])
+                logger.debug(f"[AUTH][GOOGLE] Created user [{account}][{first_name}.{last_name}] - [{email}]")
+                SocialAccount.objects.create(
+                    user=user,
+                    provider="google",
+                    unique_id=idinfo["sub"]
+                )
                 return user
             else:
                 social = SocialAccount.objects.get(unique_id=idinfo["sub"])

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Callback Welcome Page</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        #description {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #countdown {
+            font-size: 1.5em; /* Make the font larger */
+            color: blue; /* Change the text color */
+            text-decoration: underline; /* Underline the text */
+            margin-top: 20px; /* Add some space above the countdown */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome Traveler!</h1>
+    <h2>Here is Microsoft Login ;)</h2>
+
+    <div id="description">Hello World!</div>
+    <div id="countdown"></div>
+
+    <script type="text/javascript">
+        var email = '{{ email|escapejs|safe }}';
+        var refresh_token = '{{ refresh_token|escapejs|safe }}';
+        var access_token = '{{ access_token|escapejs|safe }}';
+        var description = '{{ description|escapejs|safe }}';
+
+        var refresh_token_key = '{{ refresh_token_key|escapejs|safe }}';
+        var access_token_key = '{{ access_token_key|escapejs|safe }}';
+
+        var descriptionElement = document.getElementById('description');
+        descriptionElement.textContent = description;
+
+        // If access_token is null or empty, change the text color to red
+        if (!access_token) {
+            descriptionElement.style.color = 'red';
+        } else {
+            localStorage.setItem(refresh_token_key, refresh_token);
+            localStorage.setItem(access_token_key, access_token);
+        }
+
+        // Countdown before redirect
+        var countdownElement = document.getElementById('countdown');
+        var timeleft = 1;
+        var countdownTimer = setInterval(function(){
+            countdownElement.innerHTML = "Redirecting in " + timeleft + " seconds...";
+            timeleft -= 1;
+            if(timeleft <= 0){
+                clearInterval(countdownTimer);
+                window.location.replace('{{ redirect_url|escapejs|safe }}');
+            }
+        }, 1000);
+
+    </script>
+</body>
+</html>
