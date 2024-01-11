@@ -24,8 +24,8 @@ urlpatterns = []
 ################################################################
 # app route
 urlpatterns += [
-    # google login
-    path("api/auth/google/", include("django_simple_third_party_jwt.urls")),
+    # 3rd party login
+    path("api/", include("django_simple_third_party_jwt.urls")),
 ]
 ################################################################
 

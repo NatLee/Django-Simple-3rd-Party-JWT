@@ -1,5 +1,5 @@
-var jwt_token = localStorage.getItem('access');
-var jwt_token_refresh = localStorage.getItem('refresh');
+var jwt_token = localStorage.getItem('access_token');
+var jwt_token_refresh = localStorage.getItem('refresh_token');
 
 
 data = {
@@ -7,24 +7,28 @@ data = {
 };
 
 if (jwt_token){
+    // 這邊刷新是為了測試refresh token的API是否正常
     $.ajax({
         type: "POST",
         url: "/api/auth/token/refresh",
         data: data,
         success: function (data) {
-            localStorage.setItem('access', data.access);
-            const jwt_token = data.access;
+            //console.log(data);
+            const new_access_token = data.access; // 預設access token的key為access
+            localStorage.setItem('access_token', new_access_token);
+
+            // 這邊是為了測試verify token的API是否正常
             $.ajax({
                 type: "POST",
                 url: "/api/auth/token/verify",
-                data: {"token": jwt_token},
+                data: {"token": new_access_token},
                 headers: {
-                    "Authorization": "Bearer" + " " + jwt_token
+                    "Authorization": "Bearer" + " " + new_access_token
                 },
                 success: function (data) {
                     var json_string = JSON.stringify(data, null, 2);
-                    console.log(data);
-                    $('#token').text('Bearer ' + jwt_token);
+                    //console.log(data);
+                    $('#token').text('Bearer ' + new_access_token);
                     $('#token').css('color', 'green');
                     if(json_string){
                         $('#result').text(" Token verified successfully!");

@@ -43,7 +43,7 @@
                 <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-log-in"></span> Sign up</a></li>
                 {% endif %}
                 <li><a href="#" onclick=logout()><span class="glyphicon glyphicon-log-in"></span> JWT Logout</a></li>
-                <li><a href="/api/__hidden_admin/logout/?next=/api/__hidden_dev_dashboard"><span
+                <li><a href="/api/__hidden_dev_dashboard/logout"><span
                             class="glyphicon glyphicon-log-in"></span>
                         Session Logout</a></li>
                 <li>
@@ -54,6 +54,10 @@
                             data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
                         </div>
                 </li>
+                <button id="microsoft-login-button" class="btn" onclick="location.href='/{{ microsoft_signin_path }}';">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft logo" style="width: 30px; height: 30px;">
+                    Login with Microsoft
+                </button>
             </ul>
         </div>
     </nav>

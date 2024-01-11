@@ -185,14 +185,33 @@ SIMPLE_JWT = {
 }
 # -------------- END - SimpleJWT Setting --------------
 
-# -------------- START - Google Auth Setting --------------
+# -------------- START - 3rd Party JWT Setting --------------
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 # SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
-LOGIN_REDIRECT_URL = "/"
-SOCIAL_GOOGLE_CLIENT_ID = "376808175534-d6mefo6b1kqih3grjjose2euree2g3cs.apps.googleusercontent.com" # default
-VALID_REGISTER_DOMAINS = ["gmail.com"] # default
-# --------------- END - Google Auth Setting -----------------
+LOGIN_REDIRECT_URL = "/api/__hidden_dev_dashboard"
+
+VALID_REGISTER_DOMAINS = ['gmail.com', 'outlook.com', 'hotmail.com', 'live.com']
+
+# =====================
+# Google
+SOCIAL_GOOGLE_CLIENT_ID = "376808175534-d6mefo6b1kqih3grjjose2euree2g3cs.apps.googleusercontent.com"
+# =====================
+# Microsoft
+SOCIAL_MICROSOFT_CLIENT_ID = '32346173-22bc-43b2-b6ed-f88f6a76e38c'
+# -- Secret
+SOCIAL_MICROSOFT_CLIENT_SECRET = 'K5z8Q~dIXDiFN5qjMjRjIx34cZOJ3Glkrg.dxcG9'
+# -- Callback URL
+MICROSOFT_CALLBACK_PATH = 'api/auth/microsoft/callback'
+MICROSOFT_CALLBACK_SESSION_PATH = 'api/auth/microsoft/callback/session'
+# -- Signin URL
+MICROSOFT_SIGNIN_PATH = 'api/auth/microsoft/signin'
+
+MICROSOFT_JWT_REDIRECT_ACCESS_TOKEN_KEY = 'access_token'
+MICROSOFT_JWT_REDIRECT_REFRESH_TOKEN_KEY = 'refresh_token'
+# =====================
+
+# --------------- END - 3rd Party JWT Setting -----------------
 
 
 #########################################
