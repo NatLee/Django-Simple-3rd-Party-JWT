@@ -203,7 +203,6 @@ SOCIAL_MICROSOFT_CLIENT_ID = '32346173-22bc-43b2-b6ed-f88f6a76e38c'
 SOCIAL_MICROSOFT_CLIENT_SECRET = 'K5z8Q~dIXDiFN5qjMjRjIx34cZOJ3Glkrg.dxcG9'
 # -- Callback URL
 MICROSOFT_CALLBACK_PATH = 'api/auth/microsoft/callback'
-MICROSOFT_CALLBACK_SESSION_PATH = 'api/auth/microsoft/callback/session'
 # -- Signin URL
 MICROSOFT_SIGNIN_PATH = 'api/auth/microsoft/signin'
 

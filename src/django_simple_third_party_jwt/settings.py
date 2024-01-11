@@ -19,7 +19,6 @@ SOCIAL_MICROSOFT_CLIENT_SECRET = getattr(settings, "SOCIAL_MICROSOFT_CLIENT_SECR
 
 # Callback URL
 MICROSOFT_CALLBACK_PATH = getattr(settings, "MICROSOFT_CALLBACK_PATH", 'auth/microsoft/callback')
-MICROSOFT_CALLBACK_SESSION_PATH = getattr(settings, "MICROSOFT_CALLBACK_SESSION_PATH", 'auth/microsoft/callback/session')
 
 # Signin URL
 MICROSOFT_SIGNIN_PATH = getattr(settings, "MICROSOFT_SIGNIN_PATH", 'auth/microsoft/signin')
