@@ -48,7 +48,7 @@ setuptools.setup(
     install_requires=[
         'django>=4.0.0',
         'djangorestframework',
-        'djangorestframework-simplejwt>=4.8.0',
+        'djangorestframework-simplejwt>=5.0.0',
         'requests',
         'google-auth', # Google Authentication Library
         'msal', # Microsoft Authentication Library
