@@ -148,7 +148,7 @@ def callback(request):
     username, domain = email.split('@')
 
     if domain not in jwt_settings.VALID_REGISTER_DOMAINS:
-        logger.warning(f"[AUTH][TOKEN][MICROSOFT] `{email}` attempts to register!!")
+        logger.warning(f"[AUTH][MICROSOFT] `{email}` attempts to register!!")
         return render(
             request,
             'microsoft/index.html',
@@ -163,22 +163,45 @@ def callback(request):
             }
         )
 
+    # 判斷是否有同樣的使用者名稱
     try:
-        user = User.objects.get(email=email)
+        user = User.objects.get(username=username)
     except User.DoesNotExist:
+        # 如果沒有，則建立一個新的使用者
         user = User.objects.create_user(
             username=username,
             email=email,
         )
+        # 建立 SocialAccount
         SocialAccount(
           user=user,
-          provider='microsoft',
+          provider='microsoft', # 使用 Microsoft 登入
           unique_id=email
         ).save()
-        logger.debug(f"[AUTH][TOKEN][MICROSOFT] Created user [{username}] - [{email}]")
+        logger.debug(f"[AUTH][MICROSOFT] Created user [{username}] - [{email}]")
+
+    # 判斷是否有使用 Microsoft 註冊過的 SocialAccount
+    # 因為可能是用其他方式註冊的，所以要檢查
+    try:
+        SocialAccount.objects.get(user=user, provider="microsoft")
+    except SocialAccount.DoesNotExist:
+        logger.error(f"[AUTH][MICROSOFT] SocialAccount does not exist")
+        return render(
+            request,
+            'microsoft/index.html',
+            {
+                'email': email,
+                "refresh_token": '',
+                "access_token": '',
+                "description": 'There is no account associated with this email! :(',
+                "redirect_url": jwt_settings.LOGIN_REDIRECT_URL,
+                "access_token_key": jwt_settings.MICROSOFT_JWT_REDIRECT_ACCESS_TOKEN_KEY,
+                "refresh_token_key": jwt_settings.MICROSOFT_JWT_REDIRECT_REFRESH_TOKEN_KEY
+            }
+        )
+
 
     refresh = RefreshToken.for_user(user)
-
     login(request, user)
 
     return render(
