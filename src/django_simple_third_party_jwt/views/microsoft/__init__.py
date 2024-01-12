@@ -1,4 +1,4 @@
-import os
+
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import render
@@ -16,7 +16,7 @@ from django_simple_third_party_jwt import settings as jwt_settings
 from django_simple_third_party_jwt.models import SocialAccount
 
 graph_url = 'https://graph.microsoft.com/v1.0'
-callback_url = jwt_settings.MICROSOFT_CALLBACK_PATH
+callback_url = jwt_settings.JWT_3RD_PREFIX + '/auth/microsoft/callback'
 
 settings = {
     'app_id': jwt_settings.SOCIAL_MICROSOFT_CLIENT_ID,
