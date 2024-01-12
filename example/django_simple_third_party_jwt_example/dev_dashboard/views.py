@@ -12,7 +12,6 @@ def dashboard(request):
     return render(request, "dashboard.html", {
         'social_google_client_id':settings.SOCIAL_GOOGLE_CLIENT_ID,
         'social_microsoft_client_id': settings.SOCIAL_MICROSOFT_CLIENT_ID,
-        'microsoft_signin_path': settings.MICROSOFT_SIGNIN_PATH,
     })
 
 def register(request):
@@ -21,7 +20,6 @@ def register(request):
     return render(request, "register.html", {
         "user_form": user_form,
         'social_google_client_id': settings.SOCIAL_GOOGLE_CLIENT_ID,
-        'microsoft_signin_path': settings.MICROSOFT_SIGNIN_PATH,
     })
 
 # override registration login form
@@ -45,7 +43,6 @@ def login(request):
     return render(request, 'login.html', {
         'form': form,
         'social_google_client_id': settings.SOCIAL_GOOGLE_CLIENT_ID,
-        'microsoft_signin_path': settings.MICROSOFT_SIGNIN_PATH,
     })
 
 
