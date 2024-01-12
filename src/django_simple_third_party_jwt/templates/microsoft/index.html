@@ -62,9 +62,13 @@
         var descriptionElement = document.getElementById('description');
         descriptionElement.textContent = description;
 
+        var countdownSeconds = 1;
+
+
         // If access_token is null or empty, change the text color to red
         if (!access_token) {
             descriptionElement.style.color = 'red';
+            countdownSeconds = 3;
         } else {
             localStorage.setItem(refresh_token_key, refresh_token);
             localStorage.setItem(access_token_key, access_token);
@@ -80,7 +84,7 @@
                 clearInterval(countdownTimer);
                 window.location.replace('{{ redirect_url|escapejs|safe }}');
             }
-        }, 1000);
+        }, countdownSeconds * 1000);
 
     </script>
 </body>
