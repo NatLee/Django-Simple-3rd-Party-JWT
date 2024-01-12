@@ -13,12 +13,14 @@
         {% csrf_token %} {% bootstrap_form form %}
         <input type="hidden" name="next" value="{{ next }}" />
         <hr />
-        {% buttons %}
-        <button type="submit" class="btn btn-lg btn-outline-primary btn-block">
-          <i class="glyphicon glyphicon-log-in" id="btn-submit"></i>
-          JWT Login
+        <!-- JWT Login Button -->
+        <button type="submit" name="action" value="jwt" class="btn btn-lg btn-outline-primary btn-block">
+          <i class="glyphicon glyphicon-log-in"></i> JWT Login
         </button>
-        {% endbuttons %}
+        <!-- Session Login Button -->
+        <button type="submit" name="action" value="session" class="btn btn-lg btn-outline-secondary btn-block">
+          <i class="glyphicon glyphicon-log-in"></i> Session Login
+        </button>
       </form>
     </div>
   </div>

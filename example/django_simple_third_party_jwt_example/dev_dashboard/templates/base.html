@@ -30,16 +30,14 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
 
+                <li><a href="/api/__hidden_admin/"><span class="glyphicon glyphicon-log-in"></span> Admin </a></li>
                 <li><a href="/api/__hidden_swagger"><span class="glyphicon glyphicon-log-in"></span> Swagger </a></li>
                 <li><a href="/api/__hidden_redoc"><span class="glyphicon glyphicon-log-in"></span> Redoc </a></li>
 
                 {% if request.user.is_authenticated %}
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hello {{ request.user }}</a></li>
                 {% else %}
-                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> JWT Login</a></li>
-                <li><a href="/api/__hidden_admin/login/?next=/api/__hidden_dev_dashboard"><span
-                            class="glyphicon glyphicon-log-in"></span>
-                        Session Login</a></li>
+                <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-log-in"></span> Sign up</a></li>
                 {% endif %}
                 <li><a href="#" onclick=logout()><span class="glyphicon glyphicon-log-in"></span> JWT Logout</a></li>
@@ -54,7 +52,7 @@
                             data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
                         </div>
                 </li>
-                <button id="microsoft-login-button" class="btn" onclick="location.href='/{{ microsoft_signin_path }}';">
+                <button id="microsoft-login-button" class="btn" onclick="location.href='/api/auth/microsoft/signin';">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft logo" style="width: 30px; height: 30px;">
                     Login with Microsoft
                 </button>
