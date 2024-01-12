@@ -99,10 +99,8 @@ SOCIAL_GOOGLE_CLIENT_ID = "376808175534-d6mefo6b1kqih3grjjose2euree2g3cs.apps.go
 SOCIAL_MICROSOFT_CLIENT_ID = '32346173-22bc-43b2-b6ed-f88f6a76e38c'
 # Secret
 SOCIAL_MICROSOFT_CLIENT_SECRET = 'K5z8Q~dIXDiFN5qjMjRjIx34cZOJ3Glkrg.dxcG9'
-# Callback URL
-MICROSOFT_CALLBACK_PATH = 'api/auth/microsoft/callback'
-# Signin URL
-MICROSOFT_SIGNIN_PATH = 'api/auth/microsoft/signin'
+# API URL Prefix
+JWT_3RD_PREFIX = 'api'
 
 # ================== END - Microsoft Auth ==================
 
@@ -251,7 +249,7 @@ Set `LOGIN_REDIRECT_URL` in `settings.py` and add the following code in your `Ht
 - Html
 
 ```html
-<button id="microsoft-login-button" class="btn w-100" onclick="location.href='/{{ microsoft_signin_path }}';">
+<button id="microsoft-login-button" class="btn w-100" onclick="location.href='/api/auth/microsoft/signin';">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft logo" style="width: 30px; height: 30px;">
   Login with Microsoft
 </button>
