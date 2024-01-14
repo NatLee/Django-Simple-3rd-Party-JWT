@@ -85,6 +85,9 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 LOGIN_REDIRECT_URL = "/"
 VALID_REGISTER_DOMAINS = ["gmail.com", "hotmail.com"] # Only these domains can login.
 
+# API URL Prefix
+JWT_3RD_PREFIX = 'api'
+
 # ================== Google Auth ==================
 # Add this block if you want to login with Google.
 
@@ -99,8 +102,6 @@ SOCIAL_GOOGLE_CLIENT_ID = "376808175534-d6mefo6b1kqih3grjjose2euree2g3cs.apps.go
 SOCIAL_MICROSOFT_CLIENT_ID = '32346173-22bc-43b2-b6ed-f88f6a76e38c'
 # Secret
 SOCIAL_MICROSOFT_CLIENT_SECRET = 'K5z8Q~dIXDiFN5qjMjRjIx34cZOJ3Glkrg.dxcG9'
-# API URL Prefix
-JWT_3RD_PREFIX = 'api'
 
 # ================== END - Microsoft Auth ==================
 
