@@ -25,6 +25,7 @@ urlpatterns = []
 # app route
 urlpatterns += [
     # 3rd party login
+    # here no need to add prefix "api" because it has been set in `settings.py` named JWT_3RD_PREFIX
     path("", include("django_simple_third_party_jwt.urls")),
 ]
 ################################################################
