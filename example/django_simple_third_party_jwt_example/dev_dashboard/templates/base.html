@@ -78,8 +78,8 @@
         }).done(function (data) {
             const access_token = data.access;
             const refresh_token = data.refresh_token;
-            localStorage.setItem('access', access_token);
-            localStorage.setItem('refresh', refresh_token);
+            localStorage.setItem('access_token', access_token);
+            localStorage.setItem('refresh_token', refresh_token);
             console.log('Google Login');
             $.ajax({
                 type: "POST",
