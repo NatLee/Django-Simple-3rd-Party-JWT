@@ -7,9 +7,6 @@ class SocialAccountAdmin(admin.ModelAdmin):
     SocialAccount 模型的管理UI配置
     """
 
-    # 在列表頁顯示的字段
-    list_display = ("user", "provider", "unique_id")
-
     # 可搜索的字段
     search_fields = ['user__username', 'user__email', 'provider', 'unique_id']
 

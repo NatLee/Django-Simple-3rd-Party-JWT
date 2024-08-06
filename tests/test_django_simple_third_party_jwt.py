@@ -75,11 +75,11 @@ class SocialAccountAdminTest(TestCase):
 
     def test_list_filter(self):
         """測試管理界面的過濾器"""
-        self.assertEqual(list(self.admin.list_filter), ('provider',))
+        self.assertEqual(list(self.admin.list_filter), ['provider'])
 
     def test_readonly_fields(self):
         """測試管理界面的只讀字段"""
-        self.assertEqual(list(self.admin.readonly_fields), ('unique_id',))
+        self.assertEqual(list(self.admin.readonly_fields), ['unique_id'])
 
     def test_user_email_method(self):
         """測試自定義的 user_email 方法"""
