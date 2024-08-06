@@ -51,6 +51,8 @@ TEMPLATES = [
 ROOT_URLCONF = 'tests.urls'
 SITE_ID = 1
 
+ALLOWED_HOSTS = ['*']
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
