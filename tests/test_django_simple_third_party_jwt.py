@@ -7,7 +7,7 @@ from django.contrib.admin.sites import AdminSite
 from django_simple_third_party_jwt.models import SocialAccount
 from django_simple_third_party_jwt.admin import SocialAccountAdmin
 
-from django_simple_third_party_jwt.views.google.token_login import GoogleLogin
+from django_simple_third_party_jwt.views.google import GoogleLogin
 
 class LoginViewTests(TestCase):
 
