@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microsoft Callback Welcome Page</title>
+    <title>Welcome to Microsoft Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Roboto', sans-serif;
             color: #333;
             margin: 0;
             padding: 0;
@@ -15,40 +16,73 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
         }
 
         h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
+            color: #0078d4;
         }
 
         h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: #505050;
         }
 
         #description {
-            background-color: #fff;
+            background-color: #f0f0f0;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            transition: color 0.3s ease;
         }
 
         #countdown {
-            font-size: 1.5em; /* Make the font larger */
-            color: blue; /* Change the text color */
-            text-decoration: underline; /* Underline the text */
-            margin-top: 20px; /* Add some space above the countdown */
+            font-size: 1.2em;
+            color: #0078d4;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0078d4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome Traveler!</h1>
-    <h2>Here is Microsoft Login ;)</h2>
+    <div class="container">
+        <h1>Welcome, Traveler!</h1>
+        <h2>Microsoft Login</h2>
 
-    <div id="description">Hello World!</div>
-    <div id="countdown"></div>
+        <div id="description">Hello World!</div>
+        <div class="loader"></div>
+        <div id="countdown"></div>
+    </div>
 
     <script type="text/javascript">
         var email = '{{ email|escapejs|safe }}';
@@ -62,13 +96,9 @@
         var descriptionElement = document.getElementById('description');
         descriptionElement.textContent = description;
 
-        var countdownSeconds = 1;
-
-
         // If access_token is null or empty, change the text color to red
         if (!access_token) {
-            descriptionElement.style.color = 'red';
-            countdownSeconds = 3;
+            descriptionElement.style.color = '#d83b01';
         } else {
             localStorage.setItem(refresh_token_key, refresh_token);
             localStorage.setItem(access_token_key, access_token);
@@ -76,15 +106,15 @@
 
         // Countdown before redirect
         var countdownElement = document.getElementById('countdown');
-        var timeleft = 1;
+        var timeleft = 3;
         var countdownTimer = setInterval(function(){
             countdownElement.innerHTML = "Redirecting in " + timeleft + " seconds...";
             timeleft -= 1;
-            if(timeleft <= 0){
+            if(timeleft < 0){
                 clearInterval(countdownTimer);
                 window.location.replace('{{ redirect_url|escapejs|safe }}');
             }
-        }, countdownSeconds * 1000);
+        }, 1000);
 
     </script>
 </body>
