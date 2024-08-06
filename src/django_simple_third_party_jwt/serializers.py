@@ -81,15 +81,6 @@ class GoogleLoginSerializer(serializers.Serializer):
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):
-    """
-    用於序列化和反序列化User模型的數據
-    """
-    class Meta:
-        model = User
-        fields = ["username", "email", "first_name", "last_name"]
-
-
 # 註解：以下是一些可能的範例數據
 
 # Google返回的id_token示例（JWT格式）：
@@ -111,17 +102,3 @@ class UserSerializer(serializers.ModelSerializer):
 #     "exp": 1623127056
 # }
 
-# 建立的User實例示例：
-# user = User(
-#     username="john.doe",
-#     first_name="John",
-#     last_name="Doe",
-#     email="john.doe@example.com"
-# )
-
-# 建立的SocialAccount實例示例：
-# social_account = SocialAccount(
-#     user=user,
-#     provider="google",
-#     unique_id="123456789012345678901"
-# )
