@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 
-from dev_dashboard.forms import UserRegistrationForm
-
 import logging
 
 logger = logging.getLogger(__name__)
@@ -14,13 +12,6 @@ def dashboard(request):
         'social_microsoft_client_id': settings.SOCIAL_MICROSOFT_CLIENT_ID,
     })
 
-def register(request):
-    user_form = UserRegistrationForm()
-    # template path
-    return render(request, "register.html", {
-        "user_form": user_form,
-        'social_google_client_id': settings.SOCIAL_GOOGLE_CLIENT_ID,
-    })
 
 # override registration login form
 from django.contrib.auth.forms import AuthenticationForm

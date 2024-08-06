@@ -1,45 +1,123 @@
 {% extends "base.html" %}
-
-{% block title %}Dev Dashboard{% endblock %}
 {% load static %}
+
+{% block title %}開發者儀表板{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card {
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .card-header {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+    .btn-bind {
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-    <div class="jumbotron">
-        <h1>Dev Dashboard</h1>
-        <p>Welcome to your dashboard.</p>
+<div class="container">
+    <h1 class="mb-4">開發者儀表板</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    客戶端 ID
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Google 客戶端 ID</h5>
+                    <p class="card-text">{{ social_google_client_id }}</p>
+                    <h5 class="card-title mt-3">Microsoft 客戶端 ID</h5>
+                    <p class="card-text">{{ social_microsoft_client_id }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    第三方登入綁定
+                </div>
+                <div class="card-body">
+                    <button id="google-login" class="btn btn-primary btn-bind">
+                        <i class="fab fa-google"></i> 綁定 Google
+                    </button>
+                    <button id="microsoft-login" class="btn btn-primary btn-bind">
+                        <i class="fab fa-microsoft"></i> 綁定 Microsoft
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h2>Google Client ID</h2>
-    <div class="container">
-        {{ social_google_client_id }}
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    JWT 資訊
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Token</h5>
+                    <p id="token" class="card-text"></p>
+                    <h5 class="card-title mt-3">結果</h5>
+                    <p id="result" class="card-text"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Session 資訊
+                </div>
+                <div class="card-body">
+                    {% if request.user.is_authenticated %}
+                        <p class="card-text text-success">
+                            <i class="fas fa-user-check"></i> 您已使用 session 登入為 <strong>{{ request.user }}</strong>
+                        </p>
+                    {% else %}
+                        <p class="card-text text-danger">
+                            <i class="fas fa-user-times"></i> 尚未使用 session 登入
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <h2>Microsoft Client ID</h2>
-    <div class="container">
-        {{ social_microsoft_client_id }}
-    </div>
+{% endblock %}
 
-    <h2>JWT Field</h2>
-    <h3>---------------------------</h3>
-    <div class="container">
-        <h3 id="token"></h3>
-        <h3 id="result"></h3>
-    </div>
-
-    <h2>Session Field</h2>
-    <h3>---------------------------</h3>
-
-    {% if request.user.is_authenticated %}
-    <div class="container">
-        <h3 class="text-primary">You are login as `{{ request.user }}` with this session!</h3>
-    </div>
-    {% else %}
-    <div class="container">
-        <h3 class="text-danger">No any session login.</h3>
-    </div>
-    {% endif %}
-
-
+{% block extra_js %}
 <script src="{% static 'js/dashboard.js' %}"></script>
 <script src="{% static 'js/logout.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        // 檢查並顯示 JWT token
+        const token = localStorage.getItem('access_token');
+        if (token) {
+            $('#token').text('Bearer ' + token).addClass('text-success');
+            $('#result').text('JWT 驗證成功').addClass('text-success');
+        } else {
+            $('#token').text('未找到 token').addClass('text-danger');
+            $('#result').text('請登入以獲取 JWT').addClass('text-danger');
+        }
 
+        // 綁定按鈕事件
+        $('#google-login').click(function() {
+            // 實現 Google 綁定邏輯
+            alert('Google 綁定功能待實現');
+        });
+
+        $('#microsoft-login').click(function() {
+            // 實現 Microsoft 綁定邏輯
+            alert('Microsoft 綁定功能待實現');
+        });
+    });
+</script>
 {% endblock %}

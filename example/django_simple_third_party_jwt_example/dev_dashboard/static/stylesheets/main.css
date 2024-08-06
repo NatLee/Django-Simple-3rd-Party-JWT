@@ -1,0 +1,129 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #3498db !important;
+}
+
+.navbar-nav > li > a {
+    color: #333 !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav > li > a:hover {
+    color: #3498db !important;
+}
+
+/* Button Styles */
+.btn {
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-outline-primary {
+    color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-outline-primary:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* Login and Register Forms */
+.kpx_login {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,.1);
+}
+
+.kpx_authTitle {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #3498db;
+}
+
+.kpx_loginForm {
+    margin-top: 20px;
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,.1);
+}
+
+.dashboard-container h2 {
+    color: #3498db;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Social Login Buttons */
+#microsoft-login-button {
+    background-color: #00a4ef;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+#microsoft-login-button:hover {
+    background-color: #0078d4;
+}
+
+#microsoft-login-button img {
+    margin-right: 10px;
+}
+
+/* Google Sign-In Button */
+.g_id_signin {
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .kpx_login {
+        max-width: 100%;
+        margin: 20px;
+    }
+}
