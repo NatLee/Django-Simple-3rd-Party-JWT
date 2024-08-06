@@ -173,7 +173,10 @@ def callback(request):
         logger.debug(f"[AUTH][MICROSOFT] Existing user logged in: [{user.username}] - [{email}]")
     except SocialAccount.DoesNotExist:
         # 如果不存在，創建新的 User 和 SocialAccount
-        username = str(uuid.uuid4())
+        # 如果username已存在，則使用uuid生成一個新的username
+        if User.objects.filter(username=username).exists():
+          username = str(uuid.uuid4())
+
         user = User.objects.create_user(
             username=username,
             email=email,

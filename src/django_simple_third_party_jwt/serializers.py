@@ -50,7 +50,7 @@ class GoogleLoginSerializer(serializers.Serializer):
 
         # 從idinfo中提取email
         email = idinfo["email"]
-        _, domain = email.split("@")
+        username, domain = email.split("@")
 
         # 檢查email域名是否在允許的列表中
         if domain not in settings.VALID_REGISTER_DOMAINS:
@@ -64,7 +64,10 @@ class GoogleLoginSerializer(serializers.Serializer):
             logger.debug(f"[AUTH][GOOGLE] Existing user logged in: [{user.username}] - [{email}]")
         except SocialAccount.DoesNotExist:
             # 如果不存在，創建新的 User 和 SocialAccount
-            username = str(uuid.uuid4())
+            # 如果username已存在，則使用uuid生成一個新的username
+            if User.objects.filter(username=username).exists():
+                username = str(uuid.uuid4())
+            
             user = User.objects.create_user(
                 username=username,
                 email=email,
