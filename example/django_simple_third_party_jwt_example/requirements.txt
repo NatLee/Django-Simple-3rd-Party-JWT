@@ -1,7 +1,7 @@
 # demo needed
-djangorestframework==3.13.1
-drf-yasg==1.21.4
-django-bootstrap3==21.2
+djangorestframework==3.15.2
+drf-yasg==1.21.7
+django-bootstrap3==24.2
 
 # pkg
 django-simple-third-party-jwt
