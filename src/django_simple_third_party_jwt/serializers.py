@@ -66,7 +66,9 @@ class GoogleLoginSerializer(serializers.Serializer):
             # 如果不存在，創建新的 User 和 SocialAccount
             # 如果username已存在，則使用uuid生成一個新的username
             if User.objects.filter(username=username).exists():
+                logger.debug(f"[AUTH][GOOGLE] Existing username: [{username}]")
                 username = str(uuid.uuid4())
+                logger.debug(f"[AUTH][GOOGLE] Creating new username: [{username}]")
             
             user = User.objects.create_user(
                 username=username,
