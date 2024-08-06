@@ -7,13 +7,15 @@ from django.urls import reverse
 
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from loguru import logger
-
 import msal
 import requests
 
 from django_simple_third_party_jwt import settings as jwt_settings
 from django_simple_third_party_jwt.models import SocialAccount
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 graph_url = 'https://graph.microsoft.com/v1.0'
 callback_url = jwt_settings.JWT_3RD_PREFIX + '/auth/microsoft/callback'
@@ -124,7 +126,11 @@ def callback(request):
     # Make the token request
     try:
         result = get_token_from_code(request)
-    except ValueError:
+        access_token = result['access_token']
+        email = result['id_token_claims']['preferred_username']
+
+    except Exception as e:
+        logger.error(f"[AUTH][MICROSOFT] {e}")
         return render(
             request,
             'microsoft/index.html',
@@ -138,9 +144,6 @@ def callback(request):
                 "refresh_token_key": jwt_settings.MICROSOFT_JWT_REDIRECT_REFRESH_TOKEN_KEY
             }
         )
-
-    access_token = result['access_token']
-    email = result['id_token_claims']['preferred_username']
 
     # Get the user's profile
     user = get_user(access_token)
