@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     "django_simple_third_party_jwt",
 ]
 
+MIGRATION_MODULES = {app: None for app in INSTALLED_APPS}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
