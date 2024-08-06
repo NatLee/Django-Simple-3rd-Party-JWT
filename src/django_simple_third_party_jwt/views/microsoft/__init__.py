@@ -1,4 +1,4 @@
-
+import uuid
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import render
@@ -123,7 +123,7 @@ def sign_out(request):
     return HttpResponseRedirect(reverse('microsoft-signin'))
 
 def callback(request):
-    # Make the token request
+
     try:
         result = get_token_from_code(request)
         access_token = result['access_token']
@@ -146,8 +146,8 @@ def callback(request):
         )
 
     # Get the user's profile
-    user = get_user(access_token)
-    user['email'] = email
+    user_info = get_user(access_token)
+    user_info['email'] = email
     username, domain = email.split('@')
 
     if domain not in jwt_settings.VALID_REGISTER_DOMAINS:
@@ -166,46 +166,30 @@ def callback(request):
             }
         )
 
-    # 判斷是否有同樣的使用者名稱
+    # 檢查是否存在對應的 Microsoft SocialAccount
     try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
-        # 如果沒有，則建立一個新的使用者
+        social_account = SocialAccount.objects.get(provider='microsoft', unique_id=email)
+        user = social_account.user
+        logger.debug(f"[AUTH][MICROSOFT] Existing user logged in: [{user.username}] - [{email}]")
+    except SocialAccount.DoesNotExist:
+        # 如果不存在，創建新的 User 和 SocialAccount
+        username = str(uuid.uuid4())
         user = User.objects.create_user(
             username=username,
             email=email,
         )
-        # 建立 SocialAccount
-        SocialAccount(
-          user=user,
-          provider='microsoft', # 使用 Microsoft 登入
-          unique_id=email
-        ).save()
-        logger.debug(f"[AUTH][MICROSOFT] Created user [{username}] - [{email}]")
-
-    # 判斷是否有使用 Microsoft 註冊過的 SocialAccount
-    # 因為可能是用其他方式註冊的，所以要檢查
-    try:
-        SocialAccount.objects.get(user=user, provider="microsoft")
-    except SocialAccount.DoesNotExist:
-        logger.error(f"[AUTH][MICROSOFT] SocialAccount does not exist")
-        return render(
-            request,
-            'microsoft/index.html',
-            {
-                'email': email,
-                "refresh_token": '',
-                "access_token": '',
-                "description": 'There is no account associated with this email! :(',
-                "redirect_url": jwt_settings.LOGIN_REDIRECT_URL,
-                "access_token_key": jwt_settings.MICROSOFT_JWT_REDIRECT_ACCESS_TOKEN_KEY,
-                "refresh_token_key": jwt_settings.MICROSOFT_JWT_REDIRECT_REFRESH_TOKEN_KEY
-            }
+        SocialAccount.objects.create(
+            user=user,
+            provider='microsoft',
+            unique_id=email
         )
+        logger.debug(f"[AUTH][MICROSOFT] Created new user: [{username}] - [{email}]")
 
-
-    refresh = RefreshToken.for_user(user)
+    # 登入用戶
     login(request, user)
+
+    # 生成 JWT token
+    refresh = RefreshToken.for_user(user)
 
     return render(
         request,
@@ -220,3 +204,4 @@ def callback(request):
             "refresh_token_key": jwt_settings.MICROSOFT_JWT_REDIRECT_REFRESH_TOKEN_KEY
         }
     )
+

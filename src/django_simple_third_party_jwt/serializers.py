@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from google.oauth2 import id_token
@@ -43,51 +44,42 @@ class GoogleLoginSerializer(serializers.Serializer):
         return idinfo
 
     def create(self, validated_data):
-        # 驗證token並獲取使用者　
         idinfo = self.verify_token(validated_data.get("credential"))
         if not idinfo:
             raise ValueError("Incorrect Credentials")
 
         # 從idinfo中提取email
         email = idinfo["email"]
-        account, domain = email.split("@")
+        _, domain = email.split("@")
 
         # 檢查email域名是否在允許的列表中
         if domain not in settings.VALID_REGISTER_DOMAINS:
             logger.warning(f"[AUTH][GOOGLE] `{email}` attempts to register!!")
             raise InvalidEmailError
 
-        # 從idinfo中提取使用者名稱
-        first_name = idinfo["given_name"]
-        last_name = idinfo["family_name"]
-
-        # 查找是否已存在相同使用者名的使用者
+        # 首先檢查是否存在對應的 Google SocialAccount
         try:
-            user = User.objects.get(username=account)
-        except User.DoesNotExist:
-            # 如果使用者不存在，建立新使用者
+            social_account = SocialAccount.objects.get(provider='google', unique_id=idinfo["sub"])
+            user = social_account.user
+            logger.debug(f"[AUTH][GOOGLE] Existing user logged in: [{user.username}] - [{email}]")
+        except SocialAccount.DoesNotExist:
+            # 如果不存在，創建新的 User 和 SocialAccount
+            username = str(uuid.uuid4())
             user = User.objects.create_user(
-                username=account,
-                first_name=first_name,
-                last_name=last_name,
+                username=username,
                 email=email,
+                first_name=idinfo.get("given_name", ""),
+                last_name=idinfo.get("family_name", ""),
             )
-            logger.debug(f"[AUTH][GOOGLE] Created user [{account}][{first_name}.{last_name}] - [{email}]")
-            # 建立對應的SocialAccount
             SocialAccount.objects.create(
                 user=user,
-                provider="google",
-                unique_id=idinfo["sub"]  # Google的唯一識別碼
+                provider='google',
+                unique_id=idinfo["sub"]
             )
+            logger.debug(f"[AUTH][GOOGLE] Created new user: [{username}] - [{email}]")
 
-        # 檢查使用者是否有對應的Google SocialAccount
-        try:
-            social = SocialAccount.objects.get(user=user, provider="google")
-        except SocialAccount.DoesNotExist:
-            logger.error(f"[AUTH][GOOGLE] SocialAccount does not exist")
-            raise ValueError("SocialAccount does not exist with provider `google`")
+        return user
 
-        return social.user
 
 class UserSerializer(serializers.ModelSerializer):
     """
