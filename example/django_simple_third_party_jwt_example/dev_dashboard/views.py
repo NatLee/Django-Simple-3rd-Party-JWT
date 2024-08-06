@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 
 from dev_dashboard.forms import UserRegistrationForm
@@ -46,13 +46,9 @@ def login(request):
     })
 
 
-# override session logout
-from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 
-@csrf_exempt
-@login_required
+@login_required(login_url='dev-dashboard')
 def logout(request):
-    auth_logout(request)
-    return HttpResponseRedirect(reverse('login'))
+    request.session.flush()
+    return redirect('dev-dashboard')
